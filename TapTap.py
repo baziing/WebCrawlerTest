@@ -8,7 +8,7 @@ import pandas as pd
 def main():
     # 1手动刷新
     browser = webdriver.Chrome()
-    browser.get('https://www.taptap.com/top/reserve')
+    browser.get('https://www.taptap.com/top/download')
     time.sleep(10)
     # 自动下拉
     jsCode = "var q=document.documentElement.scrollTop=100000"
@@ -16,11 +16,10 @@ def main():
         browser.execute_script(jsCode)
         time.sleep(3)
     browser.execute_script(jsCode)
-    time.sleep(10)
+    time.sleep(3)
     print("拖动滑动条到底部...")
     doc=pq(browser.page_source)
     browser.close()
-    print('close')
     # doc = pq(filename='test.html', parser='html')   # 2本地文件
     # doc=pq(url='https://www.gameres.com/newgame')   # 3在线
     gamemain=doc('.tap-list.list-content__list .game-card.flex-center--y')
