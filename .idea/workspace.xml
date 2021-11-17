@@ -29,7 +29,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
-  <component name="RunManager" selected="Python.汇率">
+  <component name="RunManager">
     <configuration name="游资网" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="WebCrawlerTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -74,7 +74,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.汇率" />
         <item itemvalue="Python.游资网" />
       </list>
     </recent_temporary>

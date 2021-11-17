@@ -24,7 +24,7 @@ path_standard='基准汇率表.csv'
 path_previous='基准汇率表.csv'
 df_currency=pd.read_excel(path_currency)
 df_standard=pd.read_csv(path_standard)
-df_previous=pd.read_csv(path_previous).rename(columns={'rate':'rate_previous'})
+df_previous=pd.read_csv(path_previous,encoding='gbk').rename(columns={'rate':'rate_previous'})
 
 # 获取汇率
 url = 'https://v6.exchangerate-api.com/v6/7ee07e43eae90730744d24c7/latest/USD'
@@ -48,5 +48,5 @@ except KeyError as ke:
     print(ke)
 
 # 生成文档
-df.to_csv(str(curtime)+'汇率更新.csv',index=False)
+df.to_csv(str(curtime)+'汇率更新.csv',index=False,encoding='gbk')
 print('本次输出文件：'+str(curtime)+'汇率更新.csv')
