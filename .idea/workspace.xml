@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66ad483e-3b7e-4530-8a33-6f14c66e9a5e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TapTap.py" beforeDir="false" afterPath="$PROJECT_DIR$/TapTap.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
