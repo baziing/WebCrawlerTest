@@ -20,8 +20,8 @@ except KeyError as ke:
 
 # 获取货币种类
 path_currency='D:/neo/对账/汇率更新/谷歌货币.xlsx'
-path_standard='基准汇率表.csv'
-path_previous='基准汇率表.csv'
+path_standard= 'tmp/基准汇率表.csv'
+path_previous= 'tmp/基准汇率表.csv'
 df_currency=pd.read_excel(path_currency)
 df_standard=pd.read_csv(path_standard)
 df_previous=pd.read_csv(path_previous,encoding='gbk').rename(columns={'rate':'rate_previous'})
