@@ -1,6 +1,8 @@
 import pymongo
 import pandas as pd
 
+# 评分
+# 休闲和恐怖 5000
 class Game:
     collectionsList = ['input_time', 'update_time', 'source', 'name', 'label', 'yanfa', 'faxing', 'changshang',
                        'taptap_id', 'taptap_score', 'taptap_downloads', 'taptap_follow', 'taptap_reserve',
@@ -31,16 +33,16 @@ class Game:
             return True
 
     def output(self,col,begin):
-        colList=['input', 'id','来源', 'name','label', '开发', '发行','href','厂商','评分', '下载', '关注','android', 'ios']
+        colList=['input', 'id','来源', 'name','label', '开发', '发行','href','厂商','评分', '下载', '关注','android', 'ios','GameRes评分']
         df = pd.DataFrame(columns=colList)
         dfDict={'input':'input_time','id':'taptap_id','来源':'source','name':'name','label':'label','开发':'yanfa',
                 '发行':'faxing','href':'href','厂商':'changshang','评分':'taptap_score','下载':'taptap_downloads',
-                '关注':'taptap_follow','android':'taptap_android','ios':'taptap_ios'}
+                '关注':'taptap_follow','android':'taptap_android','ios':'taptap_ios','GameRes评分':'gameres_score'}
         query={col:{'$gte':begin}}
         results=self.cursor.find(query)
         print(results)
         i=0
-        for result in  results:
+        for result in results:
             for col in colList:
                 if dfDict[col] not in result.keys():
                     continue
@@ -51,7 +53,7 @@ class Game:
 
 
     def isExisting(self):
-        if 'name' not in self.dict.keys():
+        if 'name' not in self.dict.keys() or 'input_time' not in self.dict.keys() or 'update_time' not in self.dict.keys():
             return -1
         if 'source' not in self.dict.keys() or self.dict['source'] not in self.priorityDict.keys():
             return -1
@@ -70,11 +72,11 @@ class Game:
                 continue
             # 原先没有的字段
             if key not in before.keys():
-                newquery = {'$set': {key: self.dict[key]}}
+                newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
                 self.cursor.update(query, newquery)
                 continue
             # 本身字段为空
-            if self.dict[key]==None or self.dict[key]==0 or self.dict[key]=='nan' or self.dict[key]=='暂无':
+            if self.dict[key]==None or self.dict[key]==0 or self.dict[key]=='nan' or self.dict[key]=='暂无' or self.dict[key]=='':
                 continue
             if key in ['taptap_score']:
                 if (float(self.dict[key])>=-self.EPSINON) and (float(self.dict[key]<=self.EPSINON)):
@@ -86,7 +88,6 @@ class Game:
                     if (float(before[key]) >= -self.EPSINON) and (float(before[key] <= self.EPSINON)):
                         newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
                         self.cursor.update(query, newquery)
-
                         continue
                 if before[key]=='' or before[key]==0 or before[key]==None or before[key]=='暂无':
                     newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
@@ -98,6 +99,6 @@ class Game:
                         self.cursor.update(query,newquery)
             # 更新来源
             if self.priorityDict[before['source']]>self.priorityDict[self.dict['source']]:
-                newquery={'$set':{'source':self.dict['source']}}
+                newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
                 self.cursor.update_one(query,newquery)
         return

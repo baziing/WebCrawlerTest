@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="66ad483e-3b7e-4530-8a33-6f14c66e9a5e" name="Changes" comment="Changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/GameDB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAPTAP测试.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/TAPTAP测试.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/9Game预约榜.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/9Game预约榜.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/GameDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/GameDB.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +52,7 @@
       <recent name="D:\neo\PYTHON\WebCrawlerTest\tmp" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.9Game预约榜">
+  <component name="RunManager" selected="Python.test (1)">
     <configuration name="9Game预约榜" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="WebCrawlerTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -160,9 +160,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test (1)" />
         <item itemvalue="Python.9Game预约榜" />
         <item itemvalue="Python.GameRes90天榜单" />
-        <item itemvalue="Python.test (1)" />
         <item itemvalue="Python.汇率v2" />
         <item itemvalue="Python.TAPTAP测试" />
       </list>
