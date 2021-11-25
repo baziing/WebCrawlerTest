@@ -84,16 +84,17 @@ class Game:
                 # 原字段为空
                 if key in ['taptap_score']:
                     if (float(before[key]) >= -self.EPSINON) and (float(before[key] <= self.EPSINON)):
-                        newquery = {'$set': {key: self.dict[key]}}
+                        newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
                         self.cursor.update(query, newquery)
+
                         continue
                 if before[key]=='' or before[key]==0 or before[key]==None or before[key]=='暂无':
-                    newquery={'$set':{key:self.dict[key]}}
+                    newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
                     self.cursor.update(query,newquery)
                 # 两个字段不匹配
                 elif str(before[key])!='' and str(self.dict[key])!='':
                     if self.priorityDict[before['source']]>=self.priorityDict[self.dict['source']]:
-                        newquery={'$set':{key:self.dict[key]}}
+                        newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
                         self.cursor.update(query,newquery)
             # 更新来源
             if self.priorityDict[before['source']]>self.priorityDict[self.dict['source']]:

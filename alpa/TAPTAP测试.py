@@ -6,7 +6,7 @@ from selenium import webdriver
 import time
 from pyquery import PyQuery as pq
 import pandas as pd
-from GameDB import Game
+from alpa.GameDB import Game
 import sys
 import os
 
