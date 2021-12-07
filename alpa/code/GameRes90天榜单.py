@@ -28,7 +28,7 @@ def main():
     m=0
     j=0
     while True:
-        print(page,"+++++++++++++++++++++++++")
+        print(page,"-----------------------------------------------------")
         url = 'https://www.16p.com/gamecenter/api/new_game_list?p=' + str(page) + '&ps=20&date_range=90'
         soup=get_soup(url)
         context=str(soup)
@@ -43,13 +43,12 @@ def main():
                     str0=mstr[mstr.find('"gamedescription"')+len('"gamedescription"')+1:mstr.find(',"has_same_gamename"')]
                     mstr=mstr.replace(str0,'""')
                     dictB=eval(mstr)
-                    print(m,input(dictB)['input_time'])
+                    input(dictB)
                 except Exception as e:
                     print('error', list0[i].rstrip(','), '+++++++++++++++++++++')
                     j=j+1
             m=m+1
         page=page+1
-    print(j)
 
 
 def input(dictB):
@@ -85,4 +84,5 @@ def input(dictB):
 
 
 if __name__ == '__main__':
+    print('GameRes90天榜单-----------------------------------------------------')
     main()

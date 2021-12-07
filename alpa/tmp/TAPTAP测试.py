@@ -36,7 +36,7 @@ class Logger(object):
 
 path = os.path.abspath(os.path.dirname(__file__))
 type = sys.getfilesystemencoding()
-sys.stdout = Logger('a.txt')
+sys.stdout = Logger('../a.txt')
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--no-sandbox')
@@ -50,16 +50,14 @@ uas = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, lik
 
 test1={'开发':'yanfa','发行':'faxing','厂商':'changshang','下载':'taptap_downloads','关注':'taptap_follow','预约':'taptap_reserve','android':'taptap_android','ios':'taptap_ios'}
 url0='https://www.taptap.com/webapiv2/app-list/v1/detail?id=386&_trackParams=%7B%22refererLogParams%22:%7B%7D%7D&X-UA=V%3D1%26PN%3DWebApp%26LANG%3Dzh_CN%26VN_CODE%3D51%26VN%3D0.1.0%26LOC%3DCN%26PLT%3DPC%26DS%3DAndroid%26UID%3Dba0b05a1-43d9-47aa-9a41-06933353e0ad%26DT%3DPC'
-page=144
+page=0
 i=0
 while True:
     print('page'+str(page)+'-----------------------------------------------------')
     if page == 0:
         murl = url0
-        print('0')
     else:
         murl='https://www.taptap.com/webapiv2/app-list/v1/detail?_boothInfo=%7B%22booth%22%3A%226380ff69_fdb81479%22%2C%22booth_id%22%3A%22251a4226e33e48a383b05730714b4035_6285fd916742407c8f1e9f5b8ec54911%22%2C%22booth_index%22%3A%222_8%22%7D&_trackParams=%7B%22refererLogParams%22%3A%7B%7D%2C%22rBoothInfo%22%3A%7B%22booth%22%3A%226380ff69_fdb81479%22%2C%22booth_id%22%3A%22251a4226e33e48a383b05730714b4035_6285fd916742407c8f1e9f5b8ec54911%22%2C%22booth_index%22%3A%222_8%22%7D%7D&id=386&limit=10&from='+str(page*10)+'&X-UA=V%3D1%26PN%3DWebApp%26LANG%3Dzh_CN%26VN_CODE%3D51%26VN%3D0.1.0%26LOC%3DCN%26PLT%3DPC%26DS%3DAndroid%26UID%3Dba0b05a1-43d9-47aa-9a41-06933353e0ad%26DT%3DPC'
-        print('1')
     msoup = get_soup(murl)
     mjson = json.loads(str(msoup))
     mlist = mjson['data']['list']
@@ -76,21 +74,13 @@ while True:
             j=j+1
         if '单机' in strlabel:
             continue
-        df.loc[i, 'input'] = time.strftime('%Y/%m/%d', time.localtime(time.time()))
         dict['input_time']=time.strftime('%Y/%m/%d', time.localtime(time.time()))
-        df.loc[i, 'update'] = time.strftime('%Y/%m/%d', time.localtime(time.time()))
         dict['update_time']=time.strftime('%Y/%m/%d', time.localtime(time.time()))
-        df.loc[i, '来源'] = 'TAPTAP新游'
         dict['source']='TAPTAP'
-        df.loc[i, 'id']=game['id']
         dict['taptap_id']=game['id']
-        df.loc[i,'name']=game['title']
         dict['name']=game['title']
-        df.loc[i, '评分']=game['stat']['rating']['score']
         dict['taptap_score']=float(game['stat']['rating']['score'])
-        df.loc[i,'label']=strlabel
         dict['label']=strlabel
-        df.loc[i, 'href']='https://www.taptap.com/app/'+str(game['id'])
         dict['href']='https://www.taptap.com/app/'+str(game['id'])
         mbrowser = webdriver.Chrome(options=chrome_options)
         mbrowser.get('https://www.taptap.com/app/' + str(game['id']))
@@ -98,16 +88,12 @@ while True:
         mdoc = pq(mbrowser.page_source)
         mbrowser.close()
         for yanfa in mdoc('.tap-text-group.tap-text-group--inline a').items():
-            # print(yanfa.find('.caption-m12-w14.gray-04.game-info__key').text(),
-            #       yanfa.find('.caption-m12-w14.gray-06').text())
             column=yanfa.find('.caption-m12-w14.gray-04.game-info__key').text()
             value=yanfa.find('.caption-m12-w14.gray-06').text()
             if column in ['开发','发行','厂商']:
                 df.loc[i,column]=value
                 dict[test1[column]]=value
         for guanzhu in mdoc('.game-info__text-item .game-info__stat--text').items():
-            # print(guanzhu.find('.caption-m12-w14.gray-04.game-info__key').text(),
-            #       guanzhu.find('.caption-m12-w14.gray-06').text())
             column=guanzhu.find('.caption-m12-w14.gray-04.game-info__key').text()
             value=guanzhu.find('.caption-m12-w14.gray-06').text()
             if column in ['下载','关注','预约']:
@@ -119,16 +105,7 @@ while True:
             if column in ['android','ios']:
                 df.loc[i, column] = value
                 dict[test1[column]] = value
-        print(i,df.loc[i,'name'])
-        print(dict)
         db=Game('gamedb','detail').input(dict)
         i=i+1
     page=page+1
-    # df.to_excel('新游'+str(page)+'-.xlsx', index=False)
-    # murl = url
-    # msoup = get_soup(murl)
-    # mjson = json.loads(str(msoup))
-    # mlist = mjson['data']['list']
-
-# df.to_excel('新游.xlsx',index=False)
 

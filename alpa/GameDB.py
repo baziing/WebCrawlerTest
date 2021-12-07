@@ -6,7 +6,9 @@ import pandas as pd
 class Game:
     collectionsList = ['input_time', 'update_time', 'source', 'name', 'label', 'yanfa', 'faxing', 'changshang',
                        'taptap_id', 'taptap_score', 'taptap_downloads', 'taptap_follow', 'taptap_reserve',
-                       'taptap_android', 'taptap_ios','gameres_id', 'gameres_score', 'href', 'remark']
+                       'taptap_android', 'taptap_ios','gameres_id', 'gameres_score', 'href', 'remark','network']
+    labelList1=['三国','西游','战国','仙侠','武侠','修仙','街机','国风']  # 5000
+    labelList2=['换装','模拟','竞速','益智','文字','种田','恋爱','音游','恐怖','赛车','解谜','烧脑','女性','女性向','教育','公益','消除','乙女'] #10000
     priorityDict = {'TAPTAP': 1, 'GameRes': 2, '九游': 3,'暂无':100}
     EPSINON = 0.000001
 
@@ -38,11 +40,24 @@ class Game:
         dfDict={'input':'input_time','id':'taptap_id','来源':'source','name':'name','label':'label','开发':'yanfa',
                 '发行':'faxing','href':'href','厂商':'changshang','评分':'taptap_score','下载':'taptap_downloads',
                 '关注':'taptap_follow','android':'taptap_android','ios':'taptap_ios','GameRes评分':'gameres_score'}
-        query={col:{'$gte':begin}}
+        query={col:{'$gte':begin},} # 大于这个的日期
         results=self.cursor.find(query)
-        print(results)
+        # print(results)
         i=0
         for result in results:
+            flag=True
+            if 'taptap_follow' in result.keys() and 'label' in result.keys():
+                mlist=result['label'].split(',')
+                follow=int(result['taptap_follow'])
+                for label in mlist:
+                    if label in self.labelList1 and follow<=5000:
+                        flag=False
+                        break
+                    if label in self.labelList2 and follow<=10000:
+                        flag=False
+                        break
+            if flag==False:
+                continue
             for col in colList:
                 if dfDict[col] not in result.keys():
                     continue
@@ -85,6 +100,7 @@ class Game:
             if str(self.dict[key])!=str(before[key]):
                 # 原字段为空
                 if key in ['taptap_score']:
+                    print(before[key],type(before[key]))
                     if (float(before[key]) >= -self.EPSINON) and (float(before[key] <= self.EPSINON)):
                         newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
                         self.cursor.update(query, newquery)
@@ -101,4 +117,46 @@ class Game:
             if self.priorityDict[before['source']]>self.priorityDict[self.dict['source']]:
                 newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
                 self.cursor.update_one(query,newquery)
+        return
+
+    def addfollow(self,col,li):
+        for item in li:
+            if int(self.cursor.count_documents({col:item}))<=0:
+                print(item,'数据不存在')
+            elif int(self.cursor.count_documents({col:item}))>1:
+                print(item,'有多条数据')
+                query = {col:item}
+                results = self.cursor.find(query)
+                for result in results:
+                    print(result)
+            else:
+                query = {col: item}
+                newquery = {'$set': {'follow': 1}}
+                self.cursor.update_one(query, newquery)
+                print(item,'添加关注')
+        return
+
+
+    def deletefollow(self,col,li):
+        for item in li:
+            if int(self.cursor.count_documents({col:item}))<=0:
+                print(item,'数据不存在')
+            elif int(self.cursor.count_documents({col:item}))>1:
+                print(item,'有多条数据')
+                query = {col:item}
+                results = self.cursor.find(query)
+                for result in results:
+                    print(result)
+            else:
+                query = {col: item}
+                newquery = {'$set': {'follow': 0}}
+                self.cursor.update_one(query, newquery)
+                print(item,'删除关注')
+        return
+
+    def updatefollow(self,col,li):
+        query = {'follow': 1}
+        newquery = {'$set': {'follow': 0}}
+        self.cursor.update_one(query, newquery)
+        self.addfollow(col,li)
         return

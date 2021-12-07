@@ -1,14 +1,13 @@
-import requests
 from pyquery import PyQuery as pq
 from selenium import webdriver
 import time
-import numpy as np
-import pandas as pd
+from alpa.TestDB import GameTest
+from alpa.GameDB import Game
 
 def main():
     # 1手动刷新
     browser = webdriver.Chrome()
-    browser.get('https://www.gameres.com/newgame')
+    browser.get('https://www.699h5.com/newgame')
     time.sleep(3)
     #
     jsCode = "var q=document.documentElement.scrollTop=100000"
@@ -28,7 +27,6 @@ def main():
     # print(browser.execute_script("arguments[0].scrollIntoView();", target))
     browser.execute_script(jsCode)
     time.sleep(10)
-    print("拖动滑动条到底部...")
 
     time.sleep(10)
     doc=pq(browser.page_source)
@@ -43,14 +41,37 @@ def main():
         # print(i,day.attr('id'))
         games=day('.gamelist a').items()
         for game in games:
+            dictA={}
+            dictB={}
+            dictA['input_time'] = time.strftime('%Y/%m/%d', time.localtime(time.time()))
+            dictA['update_time'] = time.strftime('%Y/%m/%d', time.localtime(time.time()))
+            dictA['source'] = 'GameRes'
+            dictA['name']=game.find('.item .subdiv.rightside .titlename').text()
+            dictA['label']=game.find('.item .subdiv.rightside em').text()
+            dictA['href']=game.attr('href')
+            x=str(game.attr('href'))
+            dictA['gameres_id']=int(x[x.rfind('/')+1:x.rfind('.')])
+
+            dictB['input_time'] = time.strftime('%Y/%m/%d', time.localtime(time.time()))
+            dictB['update_time'] = time.strftime('%Y/%m/%d', time.localtime(time.time()))
+            dictB['source'] = 'GameRes'
+            dictB['test_time']=str(day.attr('id')).replace('-','/')
+            dictB['name'] = game.find('.item .subdiv.rightside .titlename').text()
+            dictB['label'] = game.find('.item .subdiv.rightside em').text()
+            dictB['test_name']=game.find('.item .subdiv.rightside .mark_tag').text()
+
             # 研发和发行判断
             test=game.find('.item .subdiv.rightside .info_mark div span').text().replace(u'\xa0','')
             if '|' in test:
                 yanfa=test[test.rfind(':')+1:]
                 faxing=test[test.rfind(':')+1:]
+                dictA['yanfa']=yanfa
+                dictA['faxing']=faxing
             else:
                 yanfa=test[test.rfind('研发')+3:len(test) if test.rfind('发行')==-1 else test.rfind('发行')]
                 faxing=test[len(test) if test.rfind('发行')==-1 else test.rfind('发行')+3:]
+                dictA['yanfa'] = yanfa
+                dictA['faxing'] = faxing
 
             # 平台判断
             platforms=''
@@ -59,20 +80,10 @@ def main():
                     platforms=platforms+','+icon.attr('src')[icon.attr('src').rfind('/')+1:-4]
                 else:
                     platforms=icon.attr('src')[icon.attr('src').rfind('/')+1:-4]
-
-            # 写入表格
-            df.loc[i]=['GameRes',
-                       day.attr('id'),
-                       game.find('.item .subdiv.rightside .titlename').text(),
-                       game.find('.item .subdiv.rightside em').text(),
-                       platforms,
-                       yanfa,
-                       faxing,
-                       game.find('.item .subdiv.rightside .mark_tag').text(),
-                       game.attr('href')]
+            dictB['platform']=platforms
+            GameTest('gamedb', 'test').input(dictB)
+            Game('gamedb', 'detail').input(dictA)
             i=i+1
 
-df = pd.DataFrame(columns=['来源', '测试时间','产品名称', '品类','测试平台','开发公司','发行公司','状态','链接'])
+print('GameRes开测表-----------------------------------------------------')
 main()
-# 输出
-# df.to_csv('tmp.csv')
