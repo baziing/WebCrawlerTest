@@ -1,8 +1,8 @@
 from pyquery import PyQuery as pq
 from selenium import webdriver
 import time
-from alpa.TestDB import GameTest
-from alpa.GameDB import Game
+from alpa.model.TestDB import GameTest
+from alpa.model.GameDB import Game
 
 def main():
     # 1手动刷新

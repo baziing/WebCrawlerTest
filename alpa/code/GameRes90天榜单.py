@@ -1,7 +1,7 @@
 import requests
 import random
 from bs4 import BeautifulSoup
-from alpa.GameDB import Game
+from alpa.model.GameDB import Game
 import time
 
 null=''

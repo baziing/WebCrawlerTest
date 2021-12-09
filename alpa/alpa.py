@@ -1,7 +1,4 @@
-import sys
-import os
-from TestDB import GameTest
-from GameDB import Game
+from alpa.model.GameDB import Game
 
 # class Logger(object):
 #   def __init__(self, filename="Default.log"):
@@ -26,4 +23,5 @@ from GameDB import Game
 # os.system("python ./code/GameRes开测表.py")
 # os.system("python ./code/9Game预约榜.py")
 # os.system("python ./code/9Game开测表.py")
-print(Game('gamedb', 'detail').output('follow',1))
+
+Game('gamedb', 'detail').outputfollow('name',['偶像不是人','武林闲侠'])

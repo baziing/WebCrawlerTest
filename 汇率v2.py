@@ -10,6 +10,7 @@ url = 'https://v6.exchangerate-api.com/v6/7ee07e43eae90730744d24c7/latest/USD'
 response = requests.get(url)
 data = response.json()
 dict_currency=data['conversion_rates']
+print(dict_currency)
 
 def getCol(x):
     if '%' in x:

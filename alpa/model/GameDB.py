@@ -1,5 +1,6 @@
 import pymongo
 import pandas as pd
+from alpa.model.TaptapUpdate import *
 
 # 评分
 # 休闲和恐怖 5000
@@ -11,6 +12,8 @@ class Game:
     labelList2=['换装','模拟','竞速','益智','文字','种田','恋爱','音游','恐怖','赛车','解谜','烧脑','女性','女性向','教育','公益','消除','乙女'] #10000
     priorityDict = {'TAPTAP': 1, 'GameRes': 2, '九游': 3,'暂无':100}
     EPSINON = 0.000001
+    platformList=['taptap_android', 'taptap_ios']
+    stateDict={'下载':1,'获取':1,'预约':3,'试玩':2,'敬请期待':4,'暂无':4}
 
     def __init__(self,dbname,tablename):
         self.client = pymongo.MongoClient(host='localhost')
@@ -100,7 +103,6 @@ class Game:
             if str(self.dict[key])!=str(before[key]):
                 # 原字段为空
                 if key in ['taptap_score']:
-                    print(before[key],type(before[key]))
                     if (float(before[key]) >= -self.EPSINON) and (float(before[key] <= self.EPSINON)):
                         newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
                         self.cursor.update(query, newquery)
@@ -120,43 +122,143 @@ class Game:
         return
 
     def addfollow(self,col,li):
+        amount=0
         for item in li:
-            if int(self.cursor.count_documents({col:item}))<=0:
-                print(item,'数据不存在')
-            elif int(self.cursor.count_documents({col:item}))>1:
-                print(item,'有多条数据')
-                query = {col:item}
+            item=item.rstrip('（测试服）')
+            if col=='name':
+                query = {col: {'$regex': item}}
+            else:
+                query = {col: item}
+            if int(self.cursor.count_documents(query))<=0:
+                # print(item,'数据不存在')
+                amount = 0
+            elif int(self.cursor.count_documents(query))>2:
+                # print(item,'有多条数据')
                 results = self.cursor.find(query)
                 for result in results:
                     print(result)
+            elif int(self.cursor.count_documents(query))==2:
+                name1=self.cursor.find(query)[0]['name']
+                name2=self.cursor.find(query)[1]['name']
+                if '（' in name1:
+                    name1=name1[:name1.find('（')]
+                if '（' in name2:
+                    name2=name2[:name2.find('（')]
+                if name1==name2:
+                    newquery = {'$set': {'follow': 1}}
+                    self.cursor.update_many(query, newquery)
+                    # print(item, '添加关注')
+                else:
+                    # print(self.cursor.find(query)[0])
+                    # print(self.cursor.find(query)[1])
+                    amount = 0
             else:
-                query = {col: item}
                 newquery = {'$set': {'follow': 1}}
                 self.cursor.update_one(query, newquery)
-                print(item,'添加关注')
+                # print(item,'添加关注')
         return
 
 
     def deletefollow(self,col,li):
+        amount=0
         for item in li:
-            if int(self.cursor.count_documents({col:item}))<=0:
-                print(item,'数据不存在')
-            elif int(self.cursor.count_documents({col:item}))>1:
-                print(item,'有多条数据')
-                query = {col:item}
+            item = item.rstrip('（测试服）')
+            if col=='name':
+                query = {col: {'$regex': item}}
+            else:
+                query = {col: item}
+            if int(self.cursor.count_documents(query))<=0:
+                # print(item,'数据不存在')
+                amount = 0
+            elif int(self.cursor.count_documents(query))>2:
+                # print(item,'有多条数据')
                 results = self.cursor.find(query)
                 for result in results:
                     print(result)
+            elif int(self.cursor.count_documents(query))==2:
+                name1=self.cursor.find(query)[0]['name']
+                name2=self.cursor.find(query)[1]['name']
+                if '（' in name1:
+                    name1=name1[:name1.find('（')]
+                if '（' in name2:
+                    name2=name2[:name2.find('（')]
+                if name1==name2:
+                    newquery = {'$set': {'follow': 0}}
+                    self.cursor.update_many(query, newquery)
+                    # print(item, '删除关注')
+                else:
+                    # print(self.cursor.find(query)[0])
+                    # print(self.cursor.find(query)[1])
+                    amount = 0
             else:
-                query = {col: item}
                 newquery = {'$set': {'follow': 0}}
                 self.cursor.update_one(query, newquery)
-                print(item,'删除关注')
+                # print(item,'删除关注')
         return
 
     def updatefollow(self,col,li):
         query = {'follow': 1}
         newquery = {'$set': {'follow': 0}}
-        self.cursor.update_one(query, newquery)
+        self.cursor.update_many(query, newquery)
         self.addfollow(col,li)
+        results = self.cursor.find(query)
+        for result in results:
+            if 'href' in result.keys() and 'taptap' in result['href']:
+                try:
+                    TUpdate().loadUrl(result['href'])
+                except Exception as e:
+                    print('error',e,result)
         return
+
+
+    def outputfollow(self,col,li):
+        self.updatefollow(col,li)
+        df = pd.DataFrame(columns=['name','taptap_android','taptap_ios'])
+        i=0
+        for item in li:
+            item = item.rstrip('（测试服）')
+            if col=='name':
+                query = {col: {'$regex': item},'follow':1}
+            else:
+                query = {col: item,'follow':1}
+            if int(self.cursor.count_documents(query))<=0:
+                print(item,'数据不存在')
+            elif int(self.cursor.count_documents(query))>2:
+                print(item,'有多条数据')
+                results = self.cursor.find(query)
+                for result in results:
+                    print(result)
+            elif int(self.cursor.count_documents(query))==2:
+                name1=self.cursor.find(query)[0]['name']
+                name2=self.cursor.find(query)[1]['name']
+                if '（' in name1:
+                    name1=name1[:name1.find('（')]
+                if '（' in name2:
+                    name2=name2[:name2.find('（')]
+                if name1==name2:
+                    if '测试服' in self.cursor.find(query)[0]['name']:
+                        test=self.cursor.find(query)[0]
+                        game=self.cursor.find(query)[1]
+                    else:
+                        test = self.cursor.find(query)[1]
+                        game = self.cursor.find(query)[0]
+                    df.loc[i, 'name'] = item
+                    for plat in self.platformList:
+                        if self.stateDict.get(test[plat],2)<self.stateDict.get(game[plat],2):
+                            df.loc[i,'name']=item
+                            df.loc[i,plat]=test[plat]
+                        else:
+                            df.loc[i, 'name'] = item
+                            df.loc[i, plat] = game[plat]
+                    i=i+1
+                else:
+                    print(item,'有多条数据')
+                    print(self.cursor.find(query)[0])
+                    print(self.cursor.find(query)[1])
+            else:
+                df.loc[i, 'name'] = item
+                for plat in self.platformList:
+                    if plat in self.cursor.find(query)[0].keys():
+                        df.loc[i,plat]=self.cursor.find(query)[0][plat]
+                i=i+1
+        return df

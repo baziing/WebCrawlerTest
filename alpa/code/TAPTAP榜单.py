@@ -1,7 +1,7 @@
 from pyquery import PyQuery as pq
 from selenium import webdriver
 import time
-from alpa.GameDB import Game
+from alpa.model.GameDB import Game
 
 def refresh(browser):
     jsCode = "var q=document.documentElement.scrollTop=100000"

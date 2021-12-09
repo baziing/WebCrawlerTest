@@ -2,7 +2,7 @@ from pyquery import PyQuery as pq
 from selenium import webdriver
 import time
 import pandas as pd
-from alpa.TestDB import GameTest
+from alpa.model.TestDB import GameTest
 
 def main():
     # 1手动刷新
