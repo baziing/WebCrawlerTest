@@ -3,7 +3,14 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="\alpa\code\ab.csv">
+        <entry key="\alpa\code\abb.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\alpa\code\跟进游戏列表.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

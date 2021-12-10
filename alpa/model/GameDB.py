@@ -1,6 +1,6 @@
 import pymongo
 import pandas as pd
-from alpa.model.TaptapUpdate import *
+import alpa.model.TaptapDetail
 
 # 评分
 # 休闲和恐怖 5000
@@ -124,8 +124,8 @@ class Game:
     def addfollow(self,col,li):
         amount=0
         for item in li:
-            item=item.rstrip('（测试服）')
             if col=='name':
+                item = item.replace('（测试服）', '')
                 query = {col: {'$regex': item}}
             else:
                 query = {col: item}
@@ -138,8 +138,8 @@ class Game:
                 for result in results:
                     print(result)
             elif int(self.cursor.count_documents(query))==2:
-                name1=self.cursor.find(query)[0]['name']
-                name2=self.cursor.find(query)[1]['name']
+                name1=self.cursor.find(query)[0][col]
+                name2=self.cursor.find(query)[1][col]
                 if '（' in name1:
                     name1=name1[:name1.find('（')]
                 if '（' in name2:
@@ -162,8 +162,8 @@ class Game:
     def deletefollow(self,col,li):
         amount=0
         for item in li:
-            item = item.rstrip('（测试服）')
             if col=='name':
+                item = item.replace('（测试服）', '')
                 query = {col: {'$regex': item}}
             else:
                 query = {col: item}
@@ -176,8 +176,8 @@ class Game:
                 for result in results:
                     print(result)
             elif int(self.cursor.count_documents(query))==2:
-                name1=self.cursor.find(query)[0]['name']
-                name2=self.cursor.find(query)[1]['name']
+                name1=self.cursor.find(query)[0][col]
+                name2=self.cursor.find(query)[1][col]
                 if '（' in name1:
                     name1=name1[:name1.find('（')]
                 if '（' in name2:
@@ -205,7 +205,7 @@ class Game:
         for result in results:
             if 'href' in result.keys() and 'taptap' in result['href']:
                 try:
-                    TUpdate().loadUrl(result['href'])
+                    alpa.model.TaptapDetail.TDetail().loadUrl(result['href'])
                 except Exception as e:
                     print('error',e,result)
         return
@@ -216,11 +216,11 @@ class Game:
         df = pd.DataFrame(columns=['name','taptap_android','taptap_ios'])
         i=0
         for item in li:
-            item = item.rstrip('（测试服）')
             if col=='name':
-                query = {col: {'$regex': item},'follow':1}
+                item = item.replace('（测试服）', '')
+                query = {col: {'$regex': item}}
             else:
-                query = {col: item,'follow':1}
+                query = {col: item}
             if int(self.cursor.count_documents(query))<=0:
                 print(item,'数据不存在')
             elif int(self.cursor.count_documents(query))>2:
@@ -229,26 +229,26 @@ class Game:
                 for result in results:
                     print(result)
             elif int(self.cursor.count_documents(query))==2:
-                name1=self.cursor.find(query)[0]['name']
-                name2=self.cursor.find(query)[1]['name']
+                name1=self.cursor.find(query)[0][col]
+                name2=self.cursor.find(query)[1][col]
                 if '（' in name1:
                     name1=name1[:name1.find('（')]
                 if '（' in name2:
                     name2=name2[:name2.find('（')]
                 if name1==name2:
-                    if '测试服' in self.cursor.find(query)[0]['name']:
+                    if '测试服' in self.cursor.find(query)[0][col]:
                         test=self.cursor.find(query)[0]
                         game=self.cursor.find(query)[1]
                     else:
                         test = self.cursor.find(query)[1]
                         game = self.cursor.find(query)[0]
-                    df.loc[i, 'name'] = item
+                    df.loc[i, 'name'] = game['name']
                     for plat in self.platformList:
                         if self.stateDict.get(test[plat],2)<self.stateDict.get(game[plat],2):
-                            df.loc[i,'name']=item
+                            df.loc[i,'name']=game['name']
                             df.loc[i,plat]=test[plat]
                         else:
-                            df.loc[i, 'name'] = item
+                            df.loc[i, 'name'] = game['name']
                             df.loc[i, plat] = game[plat]
                     i=i+1
                 else:
@@ -256,7 +256,7 @@ class Game:
                     print(self.cursor.find(query)[0])
                     print(self.cursor.find(query)[1])
             else:
-                df.loc[i, 'name'] = item
+                df.loc[i, 'name'] = self.cursor.find(query)[0]['name']
                 for plat in self.platformList:
                     if plat in self.cursor.find(query)[0].keys():
                         df.loc[i,plat]=self.cursor.find(query)[0][plat]

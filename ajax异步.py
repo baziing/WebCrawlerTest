@@ -29,7 +29,6 @@ url='https://www.taptap.com/webapiv2/app-list/v1/detail?id=378&_trackParams=%7B%
 res = requests.get(url)
 res.encoding = 'utf-8'
 soup = my_get_soup(url)
-# print(soup)
 data0=json.loads(str(soup))
 print(data0)
 data=open("tmp/tmp.txt", 'w+')
