@@ -33,7 +33,10 @@ def run(url):
             j=j+1
         if '单机' in strlabel:
             continue
-        TDetail().loadUrl('https://www.taptap.com'+day.find('.tap-row-card__contents.flex-1.x-start-y-center a').attr('href'))
+        try:
+            TDetail().loadUrl('https://www.taptap.com'+day.find('.tap-row-card__contents.flex-1.x-start-y-center a').attr('href'))
+        except:
+            print('https://www.taptap.com'+day.find('.tap-row-card__contents.flex-1.x-start-y-center a').attr('href'))
 
 if __name__ == '__main__':
     print('TAPTAP热门榜-----------------------------------------------------')

@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 import random
 import json
+from urllib.parse import quote
 
 class TDetail:
     chrome_options = webdriver.ChromeOptions()
@@ -92,4 +93,13 @@ class TDetail:
                         dict['network'] = info.find('.paragraph-m14-w14.gray-08.info-form__item__value').text()
                         break
         alpa.model.GameDB.Game('gamedb', 'detail').input(dict)
+        return
+
+    def loadName(self,name):
+        urlSearch='https://www.taptap.com/webapiv2/mix-search/v2/by-keyword?kw='+quote(name)+'&X-UA=V%3D1%26PN%3DWebApp%26LANG%3Dzh_CN%26VN_CODE%3D54%26VN%3D0.1.0%26LOC%3DCN%26PLT%3DPC%26DS%3DAndroid%26UID%3D28e54860-dfa0-4874-b6d0-433570e41dbe%26DT%3DPC'
+        soup = self.my_get_soup(urlSearch)
+        results = json.loads(str(soup))['data']['list']
+        for result in results:
+            if result['type']=='app':
+                self.loadUrl('https://www.taptap.com/app/'+str(result['app']['id']))
         return

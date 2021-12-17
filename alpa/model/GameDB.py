@@ -9,7 +9,7 @@ class Game:
                        'taptap_id', 'taptap_score', 'taptap_downloads', 'taptap_follow', 'taptap_reserve',
                        'taptap_android', 'taptap_ios','gameres_id', 'gameres_score', 'href', 'remark','network']
     labelList1=['三国','西游','战国','仙侠','武侠','修仙','街机','国风']  # 5000
-    labelList2=['换装','模拟','竞速','益智','文字','种田','恋爱','音游','恐怖','赛车','解谜','烧脑','女性','女性向','教育','公益','消除','乙女'] #10000
+    labelList2=['换装','休闲','模拟','竞速','益智','文字','种田','恋爱','音游','恐怖','赛车','解谜','烧脑','女性','女性向','教育','公益','消除','乙女'] #10000
     priorityDict = {'TAPTAP': 1, 'GameRes': 2, '九游': 3,'暂无':100}
     EPSINON = 0.000001
     platformList=['taptap_android', 'taptap_ios']
@@ -24,10 +24,14 @@ class Game:
         if self.isExisting()==0:
             print('添加',self.dict['name'])
             self.cursor.insert_one(dict)
+            if dict['source'] != 'TAPTAP':
+                alpa.model.TaptapDetail.TDetail().loadName(dict['name'])
             return True
         elif self.isExisting()==1:
             print('更新',self.dict['name'])
             self.update()
+            if dict['source'] != 'TAPTAP':
+                alpa.model.TaptapDetail.TDetail().loadName(dict['name'])
             return True
         elif self.isExisting()==-1:
             print('数据格式不规范')
@@ -38,17 +42,22 @@ class Game:
             return True
 
     def output(self,col,begin):
-        colList=['input', 'id','来源', 'name','label', '开发', '发行','href','厂商','评分', '下载', '关注','android', 'ios','GameRes评分']
+        colList=['input', 'id','来源', 'name','label', '开发', '发行','href','厂商','评分', '下载', '关注','android', 'ios','GameRes评分','network']
         df = pd.DataFrame(columns=colList)
         dfDict={'input':'input_time','id':'taptap_id','来源':'source','name':'name','label':'label','开发':'yanfa',
                 '发行':'faxing','href':'href','厂商':'changshang','评分':'taptap_score','下载':'taptap_downloads',
-                '关注':'taptap_follow','android':'taptap_android','ios':'taptap_ios','GameRes评分':'gameres_score'}
-        query={col:{'$gte':begin},} # 大于这个的日期
+                '关注':'taptap_follow','android':'taptap_android','ios':'taptap_ios','GameRes评分':'gameres_score','network':'network'}
+        query={col:{'$gte':begin},'network': {'$ne': '不需要'},'taptap_follow':{'$gte':25000}} # 大于这个的日期
+        gamelist=pd.read_csv('跟进游戏列表.csv',encoding='gbk')['name'].values.tolist()
         results=self.cursor.find(query)
         # print(results)
         i=0
         for result in results:
             flag=True
+            # 在产品库的排除
+            if result['name'].replace('（测试服）','') in gamelist:
+                continue
+            # 标签筛选
             if 'taptap_follow' in result.keys() and 'label' in result.keys():
                 mlist=result['label'].split(',')
                 follow=int(result['taptap_follow'])

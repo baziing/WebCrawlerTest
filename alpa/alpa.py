@@ -12,7 +12,7 @@ from alpa.model.GameDB import Game
 #         print('error')
 #   def flush(self):
 #     pass
-
+#
 # path = os.path.abspath(os.path.dirname(__file__))
 # type = sys.getfilesystemencoding()
 # sys.stdout = Logger('a.txt')
@@ -24,4 +24,4 @@ from alpa.model.GameDB import Game
 # os.system("python ./code/9Game预约榜.py")
 # os.system("python ./code/9Game开测表.py")
 
-Game('gamedb', 'detail').outputfollow('name',['偶像不是人','武林闲侠'])
+# Game('gamedb', 'detail').outputfollow('name',['偶像不是人','武林闲侠'])
