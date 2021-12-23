@@ -1,6 +1,6 @@
 from pyquery import PyQuery as pq
 import time
-from alpa.model.GameDB import Game
+from alpa.main import Game
 
 def input(url):
     doc = pq(url=url)

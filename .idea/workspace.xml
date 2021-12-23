@@ -2,16 +2,39 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66ad483e-3b7e-4530-8a33-6f14c66e9a5e" name="Changes" comment="Changes">
+      <change afterPath="$PROJECT_DIR$/alpa/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/alpa/跟进游戏列表.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/alpa.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/alpa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/a.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/a.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/a.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/alpa.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/b.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/code/9Game开测表.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/9Game开测表.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/code/9Game预约榜.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/9Game预约榜.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/code/GameRes开测表.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/GameRes开测表.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/code/TAPTAP发现.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/TAPTAP发现.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alpa/code/TAPTAP发现v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/TAPTAP发现v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/code/TAPTAP榜单v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/TAPTAP榜单v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/code/abb.csv" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/abb.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/code/跟进游戏列表.csv" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/跟进游戏列表.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/code/TAPTAP榜单.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/TAPTAP榜单.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/code/abb.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/code/跟进游戏列表.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/alpa/code/追加跟进.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/追加跟进.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alpa/model/GameDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/model/GameDB.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alpa/model/TaptapDetail.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/model/TaptapDetail.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/model/TestDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/model/TestDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/tmp/TAPTAP新品.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/tmp/TAPTAP新游.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/tmp/TAPTAP新游2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/tmp/TAPTAP测试.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/tmp/TapTap新品榜.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/tmp/TapTap热门榜.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/tmp/TapTap预约榜.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/tmp/dbTest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/tmp/游资网.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/TMP.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/TMP1.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/test.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +71,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/alpa/code" />
+    <property name="run.code.analysis.last.selected.profile" value="aDefault" />
     <property name="settings.editor.selected.configurable" value="preferences.mongoOptions" />
   </component>
   <component name="RecentsManager">
@@ -57,14 +81,14 @@
       <recent name="D:\neo\PYTHON\WebCrawlerTest" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\neo\PYTHON\WebCrawlerTest\alpa" />
+      <recent name="D:\neo\PYTHON\WebCrawlerTest\alpa\code" />
       <recent name="D:\neo\PYTHON\WebCrawlerTest\alpa\model" />
       <recent name="D:\neo\PYTHON\WebCrawlerTest\alpa\Model" />
-      <recent name="D:\neo\PYTHON\WebCrawlerTest\alpa" />
       <recent name="$PROJECT_DIR$/alpa" />
-      <recent name="$PROJECT_DIR$/alpa/tmp" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.追加跟进">
+  <component name="RunManager" selected="Python.main">
     <configuration name="追加跟进" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="WebCrawlerTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -94,27 +118,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/alpa/code" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/alpa/code/9Game开测表.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="9Game开测表" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="WebCrawlerTest" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/alpa" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -128,7 +131,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="TAPTAP榜单v2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="GameRes开测表" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="WebCrawlerTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -140,7 +143,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/alpa/code/TAPTAP榜单v2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/alpa/code/GameRes开测表.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -212,6 +215,48 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="WebCrawlerTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/alpa" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="D:\neo\PYTHON\WebCrawlerTest\alpa\main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="WebCrawlerTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/alpa" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="D:\neo\PYTHON\WebCrawlerTest\alpa\main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="WebCrawlerTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -235,10 +280,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.追加跟进" />
+        <item itemvalue="Python.GameRes开测表" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.TAPTAP榜单v2" />
-        <item itemvalue="Python.9Game开测表" />
       </list>
     </recent_temporary>
   </component>

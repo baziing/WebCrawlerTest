@@ -1,8 +1,8 @@
 from pyquery import PyQuery as pq
 import time
 from selenium import webdriver
-from alpa.model.TestDB import GameTest
-from alpa.model.GameDB import Game
+from alpa.main import GameTest
+from alpa.main import Game
 
 def intodate(datestr):
     month=datestr[:datestr.find('月')]

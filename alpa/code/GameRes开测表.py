@@ -1,13 +1,13 @@
 from pyquery import PyQuery as pq
 from selenium import webdriver
 import time
-from alpa.model.TestDB import GameTest
-from alpa.model.GameDB import Game
+from alpa.main import GameTest
+from alpa.main import Game
 
 def main():
     # 1手动刷新
     browser = webdriver.Chrome()
-    browser.get('https://www.699h5.com/newgame')
+    browser.get('https://www.gameres.com/newgame')
     time.sleep(3)
     #
     jsCode = "var q=document.documentElement.scrollTop=100000"
@@ -50,7 +50,11 @@ def main():
             dictA['label']=game.find('.item .subdiv.rightside em').text()
             dictA['href']=game.attr('href')
             x=str(game.attr('href'))
-            dictA['gameres_id']=int(x[x.rfind('/')+1:x.rfind('.')])
+            try:
+                dictA['gameres_id']=int(x[x.rfind('/')+1:x.rfind('.')])
+            except Exception as e:
+                print(e)
+
 
             dictB['input_time'] = time.strftime('%Y/%m/%d', time.localtime(time.time()))
             dictB['update_time'] = time.strftime('%Y/%m/%d', time.localtime(time.time()))

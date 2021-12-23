@@ -97,9 +97,13 @@ class TDetail:
 
     def loadName(self,name):
         urlSearch='https://www.taptap.com/webapiv2/mix-search/v2/by-keyword?kw='+quote(name)+'&X-UA=V%3D1%26PN%3DWebApp%26LANG%3Dzh_CN%26VN_CODE%3D54%26VN%3D0.1.0%26LOC%3DCN%26PLT%3DPC%26DS%3DAndroid%26UID%3D28e54860-dfa0-4874-b6d0-433570e41dbe%26DT%3DPC'
+        # urlSearch='https://www.taptap.com/webapiv2/mix-search/v2/by-keyword?kw=%E7%8E%8B%E5%9B%BD%E4%BF%9D%E5%8D%AB%E6%88%98&X-UA=V%3D1%26PN%3DWebApp%26LANG%3Dzh_CN%26VN_CODE%3D54%26VN%3D0.1.0%26LOC%3DCN%26PLT%3DPC%26DS%3DAndroid%26UID%3D28e54860-dfa0-4874-b6d0-433570e41dbe%26DT%3DPC'
         soup = self.my_get_soup(urlSearch)
-        results = json.loads(str(soup))['data']['list']
-        for result in results:
-            if result['type']=='app':
-                self.loadUrl('https://www.taptap.com/app/'+str(result['app']['id']))
+        try:
+            results = json.loads(str(soup)[:str(soup).rfind('}')+1])['data']['list']
+            for result in results:
+                if result['type']=='app':
+                    self.loadUrl('https://www.taptap.com/app/'+str(result['app']['id']))
+        except Exception as e:
+            print(e,name)
         return

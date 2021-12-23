@@ -83,7 +83,6 @@ class GameTest:
         dfDict = {'input':'input_time','测试时间':'test_time','source':'source','name':'name','label':'label','platform':'platform','备注':'remark','测试名字':'test_name'}
         query = {col: {'$gte': begin}}
         results = self.cursor.find(query).sort('test_time',-1)
-        print(results)
         i = 0
         for result in results:
             for col in colList:

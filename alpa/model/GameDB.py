@@ -41,14 +41,16 @@ class Game:
             print('多重命名',self.dict['name'])
             return True
 
-    def output(self,col,begin):
+    def output(self,col,begin,path):
         colList=['input', 'id','来源', 'name','label', '开发', '发行','href','厂商','评分', '下载', '关注','android', 'ios','GameRes评分','network']
         df = pd.DataFrame(columns=colList)
         dfDict={'input':'input_time','id':'taptap_id','来源':'source','name':'name','label':'label','开发':'yanfa',
                 '发行':'faxing','href':'href','厂商':'changshang','评分':'taptap_score','下载':'taptap_downloads',
                 '关注':'taptap_follow','android':'taptap_android','ios':'taptap_ios','GameRes评分':'gameres_score','network':'network'}
-        query={col:{'$gte':begin},'network': {'$ne': '不需要'},'taptap_follow':{'$gte':25000}} # 大于这个的日期
-        gamelist=pd.read_csv('跟进游戏列表.csv',encoding='gbk')['name'].values.tolist()
+        # query={col:{'$gte':begin},'network': {'$ne': '不需要'},'taptap_follow':{'$gte':25000}} # 大于这个的日期
+        query = {col: {'$gte': begin}, 'network': {'$ne': '不需要'}, '$or':[{'$and':[{'taptap_follow': {'$gte': 25000}},{'source':'TAPTAP'}]},{'source':'GameRes'}]}
+        # query={col:{'$in':begin}}
+        gamelist=pd.read_csv(path, encoding='gbk')['name'].values.tolist()
         results=self.cursor.find(query)
         # print(results)
         i=0
@@ -57,11 +59,16 @@ class Game:
             # 在产品库的排除
             if result['name'].replace('（测试服）','') in gamelist:
                 continue
+            if '（测试服）' in result['name']:
+                continue
             # 标签筛选
             if 'taptap_follow' in result.keys() and 'label' in result.keys():
                 mlist=result['label'].split(',')
                 follow=int(result['taptap_follow'])
                 for label in mlist:
+                    if '单机' in label:
+                        flag=False
+                        break
                     if label in self.labelList1 and follow<=5000:
                         flag=False
                         break
@@ -92,18 +99,22 @@ class Game:
 
     def update(self):
         query={'name':self.dict['name']}
+        # print(query)
         before=self.cursor.find(query)[0]
         for key in self.dict:
             # 入库时间不改变
             if key=='input_time':
+                # print('input_time')
                 continue
             # 原先没有的字段
             if key not in before.keys():
                 newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
                 self.cursor.update(query, newquery)
+                # print('before none')
                 continue
             # 本身字段为空
             if self.dict[key]==None or self.dict[key]==0 or self.dict[key]=='nan' or self.dict[key]=='暂无' or self.dict[key]=='':
+                # print('null')
                 continue
             if key in ['taptap_score']:
                 if (float(self.dict[key])>=-self.EPSINON) and (float(self.dict[key]<=self.EPSINON)):
@@ -114,6 +125,7 @@ class Game:
                 if key in ['taptap_score']:
                     if (float(before[key]) >= -self.EPSINON) and (float(before[key] <= self.EPSINON)):
                         newquery = {'$set': {key: self.dict[key],'update_time':self.dict['update_time']}}
+                        # print(key)
                         self.cursor.update(query, newquery)
                         continue
                 if before[key]=='' or before[key]==0 or before[key]==None or before[key]=='暂无':

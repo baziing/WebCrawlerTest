@@ -41,7 +41,7 @@ uas = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, lik
        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134",\
        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0"]
 
-def run(find,page):
+def run(find,page,end):
     while True:
         print('page' + str(page) + '-----------------------------------------------------')
         if find=='预约':
@@ -76,16 +76,16 @@ def run(find,page):
                 continue
             try:
                 TDetail().loadUrl('https://www.taptap.com/app/' + str(game['id']))
-            except:
-                print('https://www.taptap.com/app/' + str(game['id']))
+            except Exception as e:
+                print(e,'https://www.taptap.com/app/' + str(game['id']))
         page = page + 1
-        if page>100:
+        if page>end:
             return
 
 
 if __name__ == '__main__':
     sys.stdout = Logger('a.txt')
-    # print('TAPTAP最新预约-----------------------------------------------------')
-    # run('预约', 11)
+    print('TAPTAP最新预约-----------------------------------------------------')
+    run('预约', 0,100)
     print('TAPTAP最新测试-----------------------------------------------------')
-    run('测试',0)
+    run('测试',0,100)

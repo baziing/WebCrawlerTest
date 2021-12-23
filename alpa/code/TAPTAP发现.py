@@ -6,7 +6,7 @@ from selenium import webdriver
 import time
 from pyquery import PyQuery as pq
 import pandas as pd
-from alpa.model.GameDB import Game
+from alpa.main import Game
 
 def get_soup(url):
     headers = {'user-agent':get_ua()}
