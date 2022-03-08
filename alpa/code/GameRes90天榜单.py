@@ -24,7 +24,7 @@ def get_ua():
 
 
 def main():
-    page = 0
+    page =0
     m=0
     j=0
     while True:

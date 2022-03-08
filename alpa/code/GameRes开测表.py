@@ -1,8 +1,8 @@
 from pyquery import PyQuery as pq
 from selenium import webdriver
 import time
-from alpa.main import GameTest
-from alpa.main import Game
+from alpa.model.GameDB import Game
+from alpa.model.TestDB import GameTest
 
 def main():
     # 1手动刷新
@@ -17,13 +17,14 @@ def main():
     #     time.sleep(3)
     #     try:
     #         print(browser.execute_script("arguments[0].scrollIntoView();", target)
+
     # 自动下拉
-    for i in range(0,5):
-        browser.execute_script(jsCode)
-        # print(browser.execute_script("arguments[0].scrollIntoView();", target))
-        time.sleep(3)
-    target=browser.find_element_by_css_selector("[class='pagediv nextpage']")
-    print(target.text)
+    # for i in range(0,5):
+    #     browser.execute_script(jsCode)
+    #     # print(browser.execute_script("arguments[0].scrollIntoView();", target))
+    #     time.sleep(3)
+    # target=browser.find_element_by_css_selector("[class='pagediv nextpage']")
+    # print(target.text)
     # print(browser.execute_script("arguments[0].scrollIntoView();", target))
     browser.execute_script(jsCode)
     time.sleep(10)

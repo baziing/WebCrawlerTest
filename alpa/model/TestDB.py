@@ -2,7 +2,7 @@ import pymongo
 import pandas as pd
 
 class GameTest:
-    collectionsList=['input_time', 'update_time','test_time','source','name','test_name','label','platform','remark']
+    collectionsList=['input_time', 'update_time','test_time','source','name','test_name','label']
     priorityDict = {'TAPTAP': 1, 'GameRes': 2, '九游': 3, '暂无': 100}
     EPSINON = 0.000001
 

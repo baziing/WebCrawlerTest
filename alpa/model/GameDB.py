@@ -1,3 +1,4 @@
+import numpy as np
 import pymongo
 import pandas as pd
 import alpa.model.TaptapDetail
@@ -39,25 +40,42 @@ class Game:
             return False
         else:
             print('多重命名',self.dict['name'])
+            print('多重命名',self.dict['name'])
             return True
+
+    def outputAll(self,col,begin,col2,end,path):
+        gamelist = pd.read_csv(path, encoding='gbk')['name'].values.tolist()
+        # query = {col: {'$gte': begin},col2:{'$lte': end}, 'name': {'$nin': gamelist, '$regex': '^((?!测试服).)*$'},'network':{'$ne':'不需要'}}
+        query = {col: {'$gte': begin},col2:{'$lte': end},'network':{'$ne':'不需要'},'name':{'$nin':gamelist},'$or':[{'$and':[{'source':'TAPTAP'},{'name':{'$regex':'^((?!测试服).)*$'}}]},{'source':{'$nin':['TAPTAP']}}]}
+        results = self.cursor.find(query)
+        return results
 
     def output(self,col,begin,path):
         colList=['input', 'id','来源', 'name','label', '开发', '发行','href','厂商','评分', '下载', '关注','android', 'ios','GameRes评分','network']
+        labelList=['MMO','卡牌','二次元','开放世界','角色扮演','RPG','MMORPG','养成','幻想','魔幻','放置','回合制','赛博朋克','ACG']
         df = pd.DataFrame(columns=colList)
         dfDict={'input':'input_time','id':'taptap_id','来源':'source','name':'name','label':'label','开发':'yanfa',
                 '发行':'faxing','href':'href','厂商':'changshang','评分':'taptap_score','下载':'taptap_downloads',
                 '关注':'taptap_follow','android':'taptap_android','ios':'taptap_ios','GameRes评分':'gameres_score','network':'network'}
         # query={col:{'$gte':begin},'network': {'$ne': '不需要'},'taptap_follow':{'$gte':25000}} # 大于这个的日期
-        query = {col: {'$gte': begin}, 'network': {'$ne': '不需要'}, '$or':[{'$and':[{'taptap_follow': {'$gte': 25000}},{'source':'TAPTAP'}]},{'source':'GameRes'}]}
+        hrefdf = pd.read_csv(path)['href'].fillna('暂无').reset_index(drop=True)
+        hreflist = hrefdf[~hrefdf.isin(['暂无'])].values.tolist()
+        gamelist=pd.read_csv(path)['name'].values.tolist()
+        query = {col: {'$gte': begin}, 'network': {'$ne': '不需要'}, 'href':{'$nin':hreflist},'name':{'$nin':gamelist},'$or':[{'$and':[{'taptap_follow': {'$gte': 10000}},{'source':'TAPTAP'}]},{'source':'GameRes'}]}
         # query={col:{'$in':begin}}
-        gamelist=pd.read_csv(path, encoding='gbk')['name'].values.tolist()
         results=self.cursor.find(query)
         # print(results)
         i=0
         for result in results:
             flag=True
             # 在产品库的排除
-            if result['name'].replace('（测试服）','') in gamelist:
+            try:
+                if result['name'].replace('（测试服）','') in gamelist:
+                    continue
+            except Exception as e:
+                print(result)
+                continue
+            if result['name'] in gamelist:
                 continue
             if '（测试服）' in result['name']:
                 continue
@@ -69,11 +87,8 @@ class Game:
                     if '单机' in label:
                         flag=False
                         break
-                    if label in self.labelList1 and follow<=5000:
-                        flag=False
-                        break
-                    if label in self.labelList2 and follow<=10000:
-                        flag=False
+                    if label in labelList:
+                        flag=True
                         break
             if flag==False:
                 continue
@@ -83,6 +98,7 @@ class Game:
                 else:
                     df.loc[i,col]=result[dfDict[col]]
             i=i+1
+            print(result['name'])
         return df
 
 
@@ -113,7 +129,7 @@ class Game:
                 # print('before none')
                 continue
             # 本身字段为空
-            if self.dict[key]==None or self.dict[key]==0 or self.dict[key]=='nan' or self.dict[key]=='暂无' or self.dict[key]=='':
+            if self.dict[key]==None or self.dict[key]==0 or self.dict[key]=='nan' or self.dict[key]=='暂无' or self.dict[key]=='' or self.dict[key]=='0':
                 # print('null')
                 continue
             if key in ['taptap_score']:
