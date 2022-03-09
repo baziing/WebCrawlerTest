@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
     # TDetail().loadUrl('https://www.taptap.com/app/10569')
 
-    TDetail().getJson(18356)
+    TDetail().loadJson(18356)
 
 
 

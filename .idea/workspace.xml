@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66ad483e-3b7e-4530-8a33-6f14c66e9a5e" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/code/GameRes90天榜单.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/GameRes90天榜单.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/code/GameRes开测表.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/GameRes开测表.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/code/TAPTAP发现v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/code/TAPTAP发现v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alpa/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/model/GameDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/model/GameDB.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alpa/model/TaptapDetail.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/model/TaptapDetail.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/model/TestDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/model/TestDB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/已入库.csv" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/已入库.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alpa/跟进游戏列表.csv" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/跟进游戏列表.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alpa/更新失败.txt" beforeDir="false" afterPath="$PROJECT_DIR$/alpa/更新失败.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +43,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../TEST" />
     <property name="run.code.analysis.last.selected.profile" value="aDefault" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
